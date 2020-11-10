@@ -100,9 +100,15 @@ export async function applyGraphQL<T>({
       const prefersHTML = request.accepts("text/html");
 
       if (prefersHTML) {
+        var origin=request.url.origin;
+        var header=request.headers.get("X-Forwarded-Proto");
+        if(header!=undefined && header=="http") {
+          origin='https://' + origin.replace("http://");
+          console.log(origin);
+        }
         const playground = renderPlaygroundPage({
-          endpoint: request.url.origin + path,
-          subscriptionEndpoint: request.url.origin,
+          endpoint: origin + path,
+          subscriptionEndpoint: origin,
         });
         response.status = 200;
         response.body = playground;
