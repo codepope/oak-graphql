@@ -103,7 +103,7 @@ export async function applyGraphQL<T>({
         var origin=request.url.origin;
         var header=request.headers.get("X-Forwarded-Proto");
         if(header!=undefined && header=="https") {
-          origin='https://' + origin.replace("http://","");
+          origin=origin.replace("http://","https://");
         }
         const playground = renderPlaygroundPage({
           endpoint: origin + path,
